@@ -1,10 +1,28 @@
 import java.util.*
 import kotlin.collections.HashMap
 
+
+private fun pressAnyKeyToContinue() {
+    println("presione Enter para continuar...")
+    try {
+        System.`in`.read()
+    } catch (e: Exception) {
+    }
+
+}
+
 fun main(args :Array<String>){
 
+    println("para comprimir un mensaje utilizando huffman se siguen los siguientes pasos.")
+
+    pressAnyKeyToContinue()
     val originalMessage = "hola mundo y raimundooo"
 
+    println("mensaje a comprimir")
+    println(originalMessage)
+
+
+    println("1. primero se calcula una tabla de fecuencia  ")
 
     val table = HashMap<Char,Int>()
     for (letra in originalMessage){
@@ -17,6 +35,13 @@ fun main(args :Array<String>){
 
     }
 
+    println("tabla de frequencia ")
+    println(table)
+
+    println()
+    println("2. se crea un nodoHuffman y se ingresan a una cola de priodidad apartir de la tabla de frecuencia")
+    pressAnyKeyToContinue()
+
     val heap = PriorityQueue<HuffPair>()
 
     for(pair in table){
@@ -25,6 +50,11 @@ fun main(args :Array<String>){
 
     println(heap)
 
+
+    println("3. se construye el arbol de abajo hacia arriba utilizando la cola de prioridad")
+    pressAnyKeyToContinue()
+
+
     while (heap.size > 1){
         val hiz = heap.remove()
         val hder = heap.remove()
@@ -32,10 +62,15 @@ fun main(args :Array<String>){
         println(heap)
     }
 
+    println("4. al finalizar se obtiene un solo nodo en la tabla de prioridad este nodo es la raiz del arbol Huffman\n para calcular los codigos hay que hacer un recorido en profundidad ")
+    pressAnyKeyToContinue()
     val codes = HashMap<Char,String>()
     heap.peek().depthFirstSearch("",codes)
 
     println(codes)
+
+    println("5. una vez calculdo los codigos se puede ir letra por letra encodificado el mensaje final ")
+    pressAnyKeyToContinue()
     var index = 0
     val bitSet= BitSet()
     for (letter in originalMessage) {
@@ -51,14 +86,28 @@ fun main(args :Array<String>){
     }
 
     println("mesage length ${bitSet.length()} mesage size ${bitSet.size()}")
+
+    println(" representacion binaria del mensaje compresso")
+    pressAnyKeyToContinue()
     for(i in 0 until bitSet.length()){
         print(if(bitSet[i]) 1 else 0)
     }
     println()
-    val longArray = bitSet.toByteArray()
+
+    println(" representacion como arreglos de byte del mensaje compresso")
+    pressAnyKeyToContinue()
+    val byteArray = bitSet.toByteArray()
     print("[")
-    for(i in 0 until longArray.size){
-        print(" ${longArray[i]} " )
+    for(i in 0 until byteArray.size){
+        print(" ${byteArray[i]} " )
+    }
+    println("]")
+
+    println(" representacion como arreglos de Characteres del mensaje compresso")
+    pressAnyKeyToContinue()
+    print("[")
+    for(i in 0 until byteArray.size){
+        print("${byteArray[i].toChar()}" )
     }
     println("]")
 
